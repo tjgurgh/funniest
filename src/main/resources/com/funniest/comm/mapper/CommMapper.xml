@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.funniest.comm.mapper.CommMapper">
+    <select id="selectMenuList" parameterType="map" resultType="camelMap">
+        SELECT T.ROW_NUM AS ROW_NUM
+              ,T.MENU_ID AS MENU_ID
+              ,T.UP_MENU_ID AS UP_MENU_ID
+              ,T.MENU_NM AS MENU_NM
+              ,T.MENU_URL AS MENU_URL
+              ,T.MENU_LEVEL AS MENU_LEVEL
+              ,T.MENU_SORT AS MENU_SORT
+              ,T.MENU_LOWEST_YN AS MENU_LOWEST_YN
+          FROM(SELECT ROWNUM AS ROW_NUM
+                     ,A.MENU_ID AS MENU_ID
+                     ,A.UP_MENU_ID AS UP_MENU_ID
+                     ,A.MENU_NM AS MENU_NM
+                     ,A.MENU_URL AS MENU_URL
+                     ,A.MENU_LEVEL AS MENU_LEVEL
+                     ,A.MENU_SORT AS MENU_SORT
+                     ,A.MENU_LOWEST_YN AS MENU_LOWEST_YN
+                FROM TCM_MENU A
+               WHERE A.MENU_ID NOT IN('MUCIO0002')
+                 AND A.MENU_YN = 'Y'
+               ) T
+         ORDER BY T.MENU_LEVEL
+                 ,T.ROW_NUM
+                 ,T.UP_MENU_ID
+                 ,T.MENU_SORT
+    </select>
+    <select id="selectMenuTreeList" parameterType="map" resultType="camelMap">
+    SELECT ROWNUM AS ROW_NUM
+          ,A.MENU_ID AS MENU_ID
+          ,A.UP_MENU_ID AS UP_MENU_ID
+          ,A.MENU_NM AS MENU_NM
+          ,A.MENU_URL AS MENU_URL
+          ,A.MENU_LEVEL AS MENU_LEVEL
+          ,A.MENU_SORT AS MENU_SORT
+          ,A.MENU_LOWEST_YN AS MENU_LOWEST_YN
+          ,CASE WHEN A.MENU_LOWEST_YN = 'Y' THEN 'true' ELSE 'false' END AS IS_LEAF
+          ,'true' AS EXPAND
+      FROM TCM_MENU A
+    WHERE A.MENU_ID NOT IN('MUCIO0002')
+      AND A.MENU_YN = 'Y'
+    START WITH A.UP_MENU_ID IS NULL
+  CONNECT BY PRIOR A.MENU_ID = A.UP_MENU_ID
+    ORDER SIBLINGS BY A.UP_MENU_ID
+                     ,A.MENU_SORT
+    </select>
+    <select id="selectMenuListCount" parameterType="map" resultType="int">
+    SELECT COUNT(*)
+      FROM TCM_MENU A
+     WHERE A.MENU_ID NOT IN('MUCI00002')
+       AND A.MENU_YN = 'Y'
+    </select>
+
+    <select id="selectComboList" parameterType="map" resultType="camelMap">
+        SELECT A.CODE AS CODE
+              ,A.CODE_GRP AS CODE_GRP
+              ,A.CODE_NM AS CODE_NM
+              ,A.CODE_FUL AS CODE_FUL
+              ,A.CODE_DESC AS CODE_DESC
+              ,A.USE_YN AS USE_YN
+          FROM TCM_COMM A
+         WHERE A.CODE = #{code}
+           AND A.CODE_GRP = #{codeGrp}
+           AND A.USE_YN = 'Y'
+         ORDER BY CASE A.LUP_ORD WHEN NULL THEN 0
+                                 ELSE A.LUP_ORD
+                  END
+    </select>
+</mapper>

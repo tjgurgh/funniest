@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.funniest.board.mapper.BoardMapper">
+    <select id="selectBoardList" parameterType="map" resultType="camelMap">
+    SELECT A.BRDM_ID AS BRDM_ID
+          ,A.BRDM_NO AS BRDM_NO
+          ,A.BRDM_TYPE AS BRDM_TYPE
+          ,A.BRDM_TIT AS BRDM_TIT
+          ,A.BRDM_LVL AS BRDM_LVL
+          ,A.BRDM_LIKE AS BRDM_LIKE
+          ,A.BRDM_HATE AS BRDM_HATE
+          ,B.BRD_NO AS BRD_NO
+          ,B.BRD_TIT AS BRD_TIT
+          ,B.BRD_CONT AS BRD_CONT
+          ,B.BRD_NKNM AS BRD_NKNM
+          ,B.BRD_LIKE AS BRD_LIKE
+          ,B.BRD_HATE AS BRD_HATE
+          ,B.BRD_CNT AS BRD_CNT
+          ,TO_CHAR(B.BRD_REGI_DATE, 'YYYY-MM-DD HH24:MI:SS') AS BRD_REGI_DATE
+          ,TO_CHAR(B.BRD_MODI_DATE, 'YYYY-MM-DD HH24:MI:SS') AS BRD_MODI_DATE
+          ,B.BRD_IMG AS BRD_IMG
+          ,B.BRD_PATH AS BRD_PATH
+          ,B.BRD_REGI_ID AS BRD_REGI_ID
+          ,B.BRD_MODI_ID AS BRD_MODI_ID
+      FROM TBM_BOARD_MASTER A
+          ,TBM_BOARD B
+     WHERE A.BRDM_ID = B.BRDM_ID
+       AND A.BRDM_NO = B.BRDM_NO
+       AND A.BRDM_TYPE = B.BRDM_TYPE
+     ORDER BY B.BRD_NO DESC
+             ,A.BRDM_NO
+    </select>
+</mapper>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" th:src="@{/js/board/list.js}"/>
+    <title>Title</title>
+</head>
+<body>
+<div class="content-wrapper" layout:fragment="content">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>DataTables</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">DataTables</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">DataTable with minimal features & hover style</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <div class="resultArea">
+                                <div class="listArea">
+                                    <div class="space15">&nbsp;</div>
+                                    <span id="FUN001_TOT">총건수 : 0건</span>,&nbsp;목록보기
+                                    <select id="condRowNum" name="condRowNum" title="조회건수">
+                                    </select>
+                                </div>
+                            </div>
+                            <!--list s-->
+                            <div id="FUN001_DIV" class="funGrid">
+                                <table id="FUN001_GRD">
+                                </table>
+                            </div>
+                            <!--list e-->
+                            <!--page s-->
+                            <div id="FUN001_PGR" class="paging">
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+
+                    <!-- /.card -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+    <script src="/js/board/list.js"></script>
+</div>
+</body>
+</html>

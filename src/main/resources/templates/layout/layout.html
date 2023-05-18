@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/commHead :: commHead">
+
+</head>
+<body>
+<th:block th:replace="layout/commHeader :: commHeader"></th:block>
+<!--<th:block th:replace="layout/content :: content"></th:block>-->
+
+<div layout:fragment="content">
+    <p>Page Content goes here</p>
+</div>
+
+
+<th:block th:replace="layout/commFooter :: commFooter"></th:block>
+<th:block th:replace="layout/commScript :: commScript"></th:block>
+</body>
+</html>

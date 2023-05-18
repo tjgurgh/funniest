@@ -1,0 +1,54 @@
+@charset "utf-8";
+/* CSS Document */
+
+@import url('http://fonts.googleapis.com/earlyaccess/nanumgothic.css');
+@import url('https://fonts.googleapis.com/earlyaccess/nanumgothic.css');
+
+/*테이블 공통 */
+table{width:100%;  border-collapse:collapse; font:12px/1 'Nanum Gothic', Dotum, "돋움", sans-serif; }
+
+/*테이블 공지 */
+.liStyle{ padding-left:0px; list-style-type: decimal; margin-left:15px; font:12px/1.6 'Nanum Gothic', Dotum, "돋움", sans-serif;}
+
+/*테이블 검색 */
+
+.tableTop td{ padding:2px 7px; }
+.tdTitle{ color: #000; font:bold 12px/1.3 'Nanum Gothic', Dotum, "돋움", sans-serif; white-space:nowrap; padding-left:10px;}
+.tdValue{ color: #000; font:12px/1.3 'Nanum Gothic', Dotum, "돋움", sans-serif; padding-left:10px;}
+input, select{ outline-width:0; border:1px solid #96acc6;color: #000;  font:12px/1 'Nanum Gothic', Dotum, "돋움", sans-serif; padding:3px; margin:2px;}
+.btnSearch{ vertical-align:middle; padding:0px; margin:2px; }
+
+/*테이블 리스트 */
+/* #wrap #container .resultArea{ border-top:2px solid #7799b7;} */
+#wrap #container .resultArea .listArea{ text-align:left; padding:5px;}
+.tableResult{  border-top:2px solid #7799b7; }
+.tableResult tr{ height: 32px; }
+.tableResult th{ color: #2f567f; font:bold 13.5px/1 'Nanum Gothic', Dotum, "돋움", sans-serif; padding:6px; background:#efefef; border:1px solid #b7b7b7; white-space:nowrap; }
+.tableResult td{ padding:11px; font:12.5px/1 'Nanum Gothic', Dotum, "돋움", sans-serif;  color: #000; border:1px solid #b7b7b7; line-height: 150%; }
+.tableResult td input{ font:12.5px/1 'Nanum Gothic', Dotum, "돋움", sans-serif;  color: #000; padding:0; margin:0;}
+.tableResult textarea{ font:12.5px/1 'Nanum Gothic', Dotum, "돋움", sans-serif; line-height: 150%;}
+/* .tableResult center{ height: 14px; padding:3px; } */
+.tableResult .on{ background:#dae3ec; }
+.tableResult td a{ color: #000; }
+.tableResult td a:hover{ text-decoration:underline; }
+.textLeft{ text-align:left; }
+.textRight{ text-align:right; }
+.textCenter{ text-align:center; }
+.tableResult .bdrAll{  border:1px solid #b7b7b7; }
+.tableResult .bdrLeft{  border-left:none; }
+.tableResult .bdrRight{ border-right:none;  }
+
+.pageBtn{ text-align:right; margin:10px 0;}
+
+.paging{overflow:hidden;clear:both;margin:0 auto;padding:10px 0;text-align:center;zoom:1;position:relative;  font:12px/1 'Nanum Gothic', Dotum, "돋움", sans-serif;  }  
+.paging a{display:inline-block; margin:0 5px;text-decoration:none !important;}
+.paging a img{vertical-align:baseline;}
+.paging strong{color: #4771ae;font:bold 13px/1 'Nanum Gothic', Dotum, "돋움", sans-serif;display:inline-block; padding:0 5px;text-decoration:none !important;} 
+.paging a:hover,.paging a:focus,.paging a:active{ }  
+.paging a.pre,.paging a.next,.paging a.pre2,.paging a.next2{position:relative;top:7px; margin:0 3px;background:none !important; }
+
+
+/*datepicker*/
+img.ui-datepicker-trigger {
+    margin-top : 3px;
+}

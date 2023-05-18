@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="content-wrapper" layout:fragment="content">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>DataTables</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">DataTables</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">테스트</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <div class="resultArea">
+                                <div class="listArea">
+                                    <div class="space15">&nbsp;</div>
+                                    <span id="FUN001_TOT">총건수 : 0건</span>,&nbsp;목록보기
+                                    <select id="condRowNum" name="condRowNum" title="조회건수">
+                                    </select>
+                                </div>
+                            </div>
+                            <!--list s-->
+                            <div id="FUN001_DIV" class="funGrid">
+                                <table id="FUN001_GRD"></table>
+                            </div>
+                            <!--list e-->
+                            <!--page s-->
+                            <div id="FUN001_PGR" class="paging">
+                            </div>
+                            <!--page e-->
+                            <!--                            <table id="example2" class="table table-bordered table-hover">
+                                                            <thead>
+                                                            <tr>
+                                                                <th th:text="${code}"></th>
+                                                                <th th:text="${message}">Browser</th>
+                                                                <th>Platform(s)</th>
+                                                                <th>Engine version</th>
+                                                                <th>CSS grade</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <tr th:each="list : ${result}">
+                                                                <td th:text="${list.menuId}"></td>
+                                                                <td th:text="${list}"></td>
+                                                                <td th:text="${list}"></td>
+                                                                <td th:text="${list}"></td>
+                                                                <td th:text="${list}"></td>
+                                                            </tr>
+                                                            </tbody>
+                                                            <tfoot>
+                                                            <tr>
+                                                                <th>Rendering engine</th>
+                                                                <th>Browser</th>
+                                                                <th>Platform(s)</th>
+                                                                <th>Engine version</th>
+                                                                <th>CSS grade</th>
+                                                            </tr>
+                                                            </tfoot>
+                                                        </table>-->
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+
+                    <!-- /.card -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+
+    <script th:inline="javascript">
+        $(function () {
+            let colNames = ['번호', '구분', '관서명', '계약명', '계약금액', 'ㅌㅌㅌㅌㅌ'];
+
+            let colModel = [
+                {name: 'rowNum', index: 'rowNum', width: 90, sortable: false, resizable: false, align: 'center'},
+                {name: 'upMenuId', index: 'upMenuId', width: 90, sortable: false, resizable: false, align: 'center'},
+                {name: 'menuId', index: 'menuId', width: 40, sortable: false, resizable: false, align: 'center'},
+                {name: 'menuNm', index: 'menuNm', width: 40, sortable: false, resizable: false, align: 'center'},
+                {name: 'menuUrl', index: 'menuUrl', width: 308, sortable: false, resizable: false, align: 'left'},
+                {name: 'menuLevel', index: 'menuLevel', width: 100, sortable: false, resizable: false, align: 'right'}
+            ];
+
+            let gridParam = {
+                id: "FUN001",
+                colNames: colNames,
+                colModel: colModel,
+                rowNum: 10,
+                onCellSelect: function (rowId, iCol, cellcontent, e) {
+                    moveViewPage(rowId, iCol);
+                }
+            };
+
+            let comboParam = [{
+                code: "RN",
+                codeNm: "10",
+                codeGrp: "ALL"
+            }];
+
+            let comboData = $.funComboAjaxCall(comboParam);
+
+            $("#condRowNum").funCreatCombo(comboData, {
+                code : "RN",
+                codeFul: "ROWNUM",
+                codeGrp: "ALL",
+                value: "10",
+                comboType: "ALL",
+                comboTypeValue: ""
+            });
+
+            let moveViewPage = function (rowId, iCol) {
+                let rowData = funGrid.getRowData(rowId);
+
+                if (isEmpty(rowData) == true) {
+                    return;
+                }
+            };
+
+            let funGrid = $.funGrid(gridParam);
+            let datas = {"page": "1", "count": "10"};
+            let doSearch = function (params) {
+                $.funAjaxCall({
+                    url: "/funniest/comm/commMenuLevelList",
+                    data: datas,
+                    async: true,
+                    type: "GET",
+                    callBack: doSearchCallBack
+                });
+            }
+
+            let doSearchCallBack = function (data) {
+                console.log(data);
+                if (isEmpty(data) == true || data.code !== 200 || data.httpStatus !== "OK") {
+                    return;
+                }
+
+                funGrid.addFunJsonData(data);
+                $("#FUN001_PGR").addPagingData(data, "doPageSearch");
+                $("#FUN001_TOT").html("총건수 : " + addCommaStr(data.count) + "건");
+
+            }
+
+            doSearch();
+        });
+    </script>
+</div>
+
+</body>
+</html>
